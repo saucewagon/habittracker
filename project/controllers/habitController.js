@@ -16,17 +16,11 @@ router.post('/', (req, res) => {
         updateRecord(req, res);
 });
 
-router.post('/checkin/:id', (req, res) => {
-    incRecord(req, res);
-});
-
 function insertRecord(req, res) {
     var habit = new Habit();
     habit.commitment = req.body.commitment;
     habit.checkIns = 0;
-    // habit.email = req.body.email;
-    // habit.mobile = req.body.mobile;
-    // habit.city = req.body.city;
+
     habit.save((err, doc) => {
         if (!err)
             res.redirect('/');
@@ -60,30 +54,6 @@ function updateRecord(req, res) {
         }
     });
 }
-
-function incRecord(req, res) {
-    console.log('asdfasdfasdf');
-    Habit.findOneAndUpdate({ _id: req.body._id }, {$inc: {checkIns: 1}}, { new: true }, (err, doc) => {
-        if (!err) { 
-            console.log('asdf');
-            
-            res.redirect('/'); }
-        else {
-            console.log('here');
-            if (err.name == 'ValidationError') {
-                handleValidationError(err, req.body);
-                res.render("habit/addOrEdit", {
-                    viewTitle: 'Update Habit',
-                    employee: req.body
-                });
-            }
-            else
-                console.log('Error during record update : ' + err);
-        }
-    });
-}
-
-
 router.get('/', (req, res) => {
     Habit.find((err, docs) => {
         if (!err) {
@@ -104,9 +74,6 @@ function handleValidationError(err, body) {
             case 'commitment':
                 body['commitmentError'] = err.errors[field].message;
                 break;
-            // case 'email':
-            //     body['emailError'] = err.errors[field].message;
-            //     break;
             default:
                 break;
         }
@@ -123,47 +90,26 @@ router.get('/:id', (req, res) => {
         }
     });
 });
+router.post('/checkin/:id', (req, res) => {
+    Habit.findOneAndUpdate(
+    
+        {'_id': req.params.id},
+        {$inc: {checkIns : 1}},
+         (err, doc) => {
+        if (!err) {
+            res.redirect('/');
+        }
+        else { console.log('Error incrementing checkin :' + err); }
+    });
+});
 
 router.get('/delete/:id', (req, res) => {
     Habit.findByIdAndRemove(req.params.id, (err, doc) => {
         if (!err) {
             res.redirect('/');
         }
-        else { console.log('Error in habit delete :' + err); }
+        else { console.log('Error deleting habit :' + err); }
     });
 });
-
-// router.get('/checkin/:id', (req, res) => {
-
-//     Habit.findOne({ '_id': req.body._id }, (err, habit) => {
-//         //habit.checkins = req.body.checkIns + 1;
-//         habit.save();
-//     });
-
-
-//     // Habit.findOneAndUpdate({_id: req.body._id},
-        
-//     //     { 
-//     //         '$inc': {checkIns: req.body.checkIns } });
-//     // res.redirect('/');
-// });
-
-// router.get('/checkin/:id', (req, res) => {
-
-//     Habit.findOneAndUpdate({_id: req.body._id}, {checkIns: 7}, {new : true}, (err, doc) => {
-//         if (!err) { res.redirect('/'); }
-//         else {
-//             if (err.name == 'ValidationError') {
-//                 handleValidationError(err, req.body);
-//                 res.render("habit/addOrEdit", {
-//                     viewTitle: 'Update Habit',
-//                     employee: req.body
-//                 });
-//             }
-//             else
-//                 console.log('Error during record update : ' + err);
-//         }
-//     });
-// }
 
 module.exports = router;

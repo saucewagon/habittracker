@@ -10,9 +10,7 @@ const habitController = require('./controllers/habitController');
 var app = express();
 app.use(express.static(path.join(__dirname + '/public')));
 
-app.use(bodyparser.urlencoded({
-    extended: true
-}));
+app.use(bodyparser.urlencoded({extended: true}));
 app.use(bodyparser.json());
 app.set('views', path.join(__dirname, '/views/'));
 app.engine('hbs', exphbs({ extname: 'hbs', defaultLayout: 'mainLayout', layoutsDir: __dirname + '/views/layouts/' }));
