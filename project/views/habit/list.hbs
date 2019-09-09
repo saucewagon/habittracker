@@ -1,0 +1,45 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+{{!-- 
+<h3><a class="btn btn-secondary" href="/addoredit"><i class="fa fa-plus"></i> Create New</a> Habit</h3> --}}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Daily Habits</th>
+            <th>Check Ins</th>
+            {{!-- <th>Email</th>
+            <th>Mobile</th>
+            <th>City</th> --}}
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each list}}
+        <tr>
+            <td>{{this.commitment}}</td>
+            <td>{{this.checkIns}}</td>
+            {{!-- <td>{{this.email}}</td>
+            <td>{{this.mobile}}</td>
+            <td>{{this.city}}</td> --}}
+            <td>
+                <form action="/checkin/{{this._id}}" method="POST">
+    <button type="submit" name="submitButton" value="your_value" class="btn-link">Check In</button>
+</form>
+
+<form action="/checkin/{{this._id}}" method="POST" autocomplete="off">
+    <input type="hidden" name="_id" value="{{employee._id}}">
+    <div class="form-group">
+        <label>checkin</label>
+        <input type="text" class="form-control" name="commitment" placeholder="Commitment" value="{{employee.commitment}}">
+        <div class="text-danger">
+            {{employee.commitmentError}}</div>
+    </div>
+                {{!-- <a href="/checkin/{{this._id}}"><i action="/checkin" method="POST" class="fa fa-trash fa-lg" aria-hidden="true"></i>Check In</a> --}}
+                <a href="{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit Commitment</a>
+                <a href="/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i>Delete</a>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
