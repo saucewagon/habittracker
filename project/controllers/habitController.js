@@ -29,7 +29,7 @@ function insertRecord(req, res) {
                 handleValidationError(err, req.body);
                 res.render("habit/addOrEdit", {
                     viewTitle: "Create New Habit",
-                    employee: req.body
+                    habit: req.body
                 });
             }
             else
@@ -46,7 +46,7 @@ function updateRecord(req, res) {
                 handleValidationError(err, req.body);
                 res.render("habit/addOrEdit", {
                     viewTitle: 'Update Habit',
-                    employee: req.body
+                    habit: req.body
                 });
             }
             else
@@ -85,7 +85,7 @@ router.get('/:id', (req, res) => {
         if (!err) {
             res.render("habit/addOrEdit", {
                 viewTitle: "Update Habit",
-                employee: doc
+                habit: doc
             });
         }
     });

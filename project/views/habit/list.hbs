@@ -17,13 +17,13 @@
             <td>
 
 <form action="/checkin/{{this._id}}" method="post" autocomplete="off">
-    <input type="hidden" name="_id" value="{{employee._id}}">
+    <input type="hidden" name="_id" value="{{habit._id}}">
     <div class="form-group">
         <input type="hidden" class="form-control" name="checkIns" placeholder="Commitment" value="{{this.checkIns}}">
         <input type="submit" value="Check In" />
         </div></form>
-                <a href="{{this._id}}"><i class="fa fa-pencil fa-lg" aria-hidden="true"></i>Edit Commitment</a>
-                <a href="/delete/{{this._id}}" onclick="return confirm('Confirm delete?');"><i class="fa fa-trash fa-lg" aria-hidden="true"></i>Delete</a>
+                <a href="{{this._id}}">Edit Commitment</a>
+                <a href="/delete/{{this._id}}" onclick="return confirm('Confirm delete?');">Delete</a>
             </td>
         </tr>
         {{/each}}
